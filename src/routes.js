@@ -1,7 +1,8 @@
-import HelloWorldVue from "./components/HelloWorld.vue";
-import LoginVue from "./components/Login.vue";
+import login from "./components/Login.vue"
+import home from "./components/Home.vue"
+
 
 export const routes = [
-  {path: '/', component: HelloWorldVue},
-  {path: '/login', component: LoginVue}
+    { path: '/', component: home },
+    { path: '/login', component: login }
 ]
