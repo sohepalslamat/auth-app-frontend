@@ -33,7 +33,7 @@ export default {
   },
   methods:{
     login(){
-      this.r = this.username
+      this.$api.get('auth/users')
 
     }
   }
