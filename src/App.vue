@@ -14,7 +14,12 @@
   </v-app>
 </template>
 
-<script setup>
+<script>
+export default {
+  beforeCreate(){
+    this.$store.commit('INIT_STATE')
+  }
+}
 
 </script>
 <style>

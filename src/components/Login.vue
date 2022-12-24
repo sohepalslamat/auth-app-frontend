@@ -1,7 +1,6 @@
 <template>
   <v-container fluid class="fill-height">
     <v-responsive class="d-flex align-center text-center fill-height">
-      {{r.access}}
       <v-row justify="center">
         <v-col cols="5">
           <v-card class="pa-4 px-6" elevation="8">
@@ -34,12 +33,7 @@ export default {
   },
   methods:{
     login(){
-      this.$api.post('auth/jwt/create', {email: this.email, password: this.password}).then((res) => {
-        this.r = res.data
-
-      }).catch((err) => {
-
-      });
+      this.$store.dispatch('login', {email: this.email, password: this.password})
 
     }
   }
