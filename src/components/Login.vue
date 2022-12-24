@@ -19,16 +19,12 @@
   </v-container>
 </template>
 
-<script setup>
-//
-</script>
 <script>
 export default {
   data(){
     return{
       email: '',
       password: '',
-      r: '',
       loading: false
     }
   },

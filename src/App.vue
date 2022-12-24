@@ -1,12 +1,14 @@
 <template>
   <v-app class="bg-cyan-lighten-5">
     <v-app-bar color="grey-lighten-4" :elevation="4">
-      <v-app-bar-title>Auth App</v-app-bar-title>
-
+      <v-app-bar-title  @click="$router.push('/')" style="cursor: pointer;">Auth App</v-app-bar-title>
         <template v-slot:append>
+          <v-spacer></v-spacer>
           <v-btn v-if="$store.state.user" color="success" @click="logout">Logout</v-btn>
-          <v-btn v-else color="primary" class="mx-2" @click="$router.push('login')"> Login </v-btn>
-          <v-btn color="secondary" @click="$router.push('/')"> Home </v-btn>
+          <div v-else>
+            <v-btn color="primary" class="mx-2" @click="$router.push('login')"> Login </v-btn>
+            <v-btn color="secondary" class="mx-2" @click="$router.push('register')" variant="outlined"> register </v-btn>
+          </div>
         </template>
     </v-app-bar>
     <v-main>

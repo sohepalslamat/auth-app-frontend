@@ -25,9 +25,11 @@ export const store = createStore({
       localStorage.setItem('auth-token', '')
     },
     INIT_STATE (state){
-      state.token = localStorage.getItem('auth-token')
-      state.user = localStorage.getItem('auth-user') ? JSON.parse(localStorage.getItem('auth-user')) : localStorage.getItem('auth-user')
-      api.defaults.headers.Authorization = `Bearer ${state.token}`
+      if(state.token){
+        state.token = localStorage.getItem('auth-token')
+        state.user = localStorage.getItem('auth-user') ? JSON.parse(localStorage.getItem('auth-user')) : localStorage.getItem('auth-user')
+        api.defaults.headers.Authorization = `Bearer ${state.token}`
+      }
     }
   },
   actions: {
@@ -58,6 +60,9 @@ export const store = createStore({
     },
     logout({commit}){
       commit('LOGOUT')
+    },
+    register(_, user){
+      return api.post('auth/users/', user)
     }
   }
 })
