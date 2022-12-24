@@ -18,24 +18,46 @@ export const store = createStore({
       state.user = user
       localStorage.setItem('auth-user', JSON.stringify(user))
     },
+    LOGOUT (state){
+      state.token = null
+      state.user = null
+      localStorage.setItem('auth-user', '')
+      localStorage.setItem('auth-token', '')
+    },
     INIT_STATE (state){
       state.token = localStorage.getItem('auth-token')
-      state.user = JSON.parse(localStorage.getItem('auth-user'))
+      state.user = localStorage.getItem('auth-user') ? JSON.parse(localStorage.getItem('auth-user')) : localStorage.getItem('auth-user')
       api.defaults.headers.Authorization = `Bearer ${state.token}`
     }
   },
   actions: {
     login({commit, dispatch}, data){
-      api.post('auth/jwt/create', data).then((res)=> {
-        commit('SET_TOKEN', res.data.access)
-        dispatch('me')
+      return new Promise((resolve, reject)=>{
 
+        api.post('auth/jwt/create', data).then((res)=> {
+          commit('SET_TOKEN', res.data.access)
+          dispatch('me').then((res1)=>{
+            resolve(res1)
+          })
+
+        }).catch((err)=> {
+          reject(err)
+        })
       })
     },
     me({commit}){
-      api.get('auth/users/me').then((res)=>{
-        commit('SET_USER', res.data)
+      return new Promise((resolve, reject)=> {
+
+        api.get('auth/users/me/').then((res)=>{
+          commit('SET_USER', res.data)
+          resolve(res.data)
+        }).catch((err)=> {
+          reject(err)
+        })
       })
+    },
+    logout({commit}){
+      commit('LOGOUT')
     }
   }
 })

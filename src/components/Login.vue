@@ -10,7 +10,7 @@
             <v-form>
               <v-text-field v-model="email" variant="outlined" class="mb-3" label="Email"></v-text-field>
               <v-text-field v-model="password" variant="outlined" class="mb-3" type="password" label="Password"></v-text-field>
-              <v-btn color="primary" class="mb-3" block @click="login">Login</v-btn>
+              <v-btn color="primary" :loading="loading" class="mb-3" block @click="login">Login</v-btn>
             </v-form>
           </v-card>
         </v-col>
@@ -28,12 +28,20 @@ export default {
     return{
       email: '',
       password: '',
-      r: ''
+      r: '',
+      loading: false
     }
   },
   methods:{
     login(){
-      this.$store.dispatch('login', {email: this.email, password: this.password})
+      this.loading = true
+      this.$store.dispatch('login', {email: this.email, password: this.password}).then((res) => {
+        this.$router.push('/')
+      }).catch((err) => {
+
+      }).finally(()=>{
+        this.loading = false
+      })
 
     }
   }

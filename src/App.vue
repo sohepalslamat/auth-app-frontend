@@ -4,7 +4,8 @@
       <v-app-bar-title>Auth App</v-app-bar-title>
 
         <template v-slot:append>
-          <v-btn color="primary" class="mx-2" @click="$router.push('login')"> Login </v-btn>
+          <v-btn v-if="$store.state.user" color="success" @click="logout">Logout</v-btn>
+          <v-btn v-else color="primary" class="mx-2" @click="$router.push('login')"> Login </v-btn>
           <v-btn color="secondary" @click="$router.push('/')"> Home </v-btn>
         </template>
     </v-app-bar>
@@ -18,6 +19,21 @@
 export default {
   beforeCreate(){
     this.$store.commit('INIT_STATE')
+  },
+  computed:{
+    token(){
+      return this.$store.state.token
+    }
+  },
+  watch:{
+    token(val){
+      !val ? this.$router.push('login') : null
+    }
+  },
+  methods:{
+    logout(){
+      this.$store.dispatch('logout')
+    }
   }
 }
 
